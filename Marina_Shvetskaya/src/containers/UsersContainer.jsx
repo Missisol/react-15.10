@@ -18,13 +18,13 @@ export default class UsersContainer extends Component {
     const { page } = this.state;
     this.setState({
       loading: true,
-      page: page + 1,
     });
     fetch(`https://jsonplaceholder.typicode.com/users?_limit=6&_page=${page}`)
     .then((response) => response.json())
     .then((users) => {
       this.setState({
         loading: false,
+        page: page + 1,
         users: this.state.users.concat(users),
       })
     })
@@ -42,12 +42,12 @@ export default class UsersContainer extends Component {
   }
 
   render() {
-    const { loadig, users } = this.state;
+    const { loading, users } = this.state;
 
     return (
       <Fragment>
         <UsersList users={users} />
-        {loadig ? 'loading' : ''}
+        {loading ? 'loading' : ''}
         <button className="btn btn-secondary float-right" onClick={this.handleClick}>
           More
         </button>

@@ -18,13 +18,13 @@ export default class BlogContainer extends Component {
     const { page } = this.state;
     this.setState({
       loading: true,
-      page: page + 1,
     });
     fetch(`https://jsonplaceholder.typicode.com/posts?_limit=5&_page=${page}`)
     .then((response) => response.json())
     .then((posts) => {
       this.setState({
         loading: false,
+        page: page + 1,
         posts: this.state.posts.concat(posts),
       })
     })

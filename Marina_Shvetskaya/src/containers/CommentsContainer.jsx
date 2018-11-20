@@ -18,13 +18,13 @@ export default class CommentsContainer extends Component {
     const { page } = this.state;
     this.setState({
       loading: true,
-      page: page + 1,
     });
     fetch(`https://jsonplaceholder.typicode.com/comments?_sort=id&_order=desc&_limit=10&_page=${page}`)
     .then((response) => response.json())
     .then((comments) => {
       this.setState({
         loading: false,
+        page: page + 1,
         comments: this.state.comments.concat(comments),
       })
     })
@@ -32,7 +32,7 @@ export default class CommentsContainer extends Component {
   }
 
   handleScroll = () => {
-    if(document.documentElement.clientHeight - window.scrollY <= 0 ) {
+    if(document.documentElement.clientHeight - window.scrollY - window.innerHeight === 0) {
       if(!this.state.loading) {
         this.loadComments();
       }
@@ -55,7 +55,7 @@ export default class CommentsContainer extends Component {
     return (
       <Fragment>
         <CommentsList comments={comments}/>
-        {loading ? 'loading' : ''}
+        {loading ? 'Loading' : ''}
       </Fragment>
     )
   }
