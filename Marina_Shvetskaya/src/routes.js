@@ -4,6 +4,7 @@ import CommentsContainer from 'containers/CommentsContainer';
 import UsersContainer from 'containers/UsersContainer';
 import CommentContainer from 'containers/CommentContainer';
 import UserPostCommentsContainer from 'containers/UserPostCommentsContainer';
+import MessagesContainer from 'containers/MessagesContainer';
 
 export default [
   {
@@ -35,5 +36,10 @@ export default [
     path: '/users/:postId/:userId',
     exact: true,
     component: UserPostCommentsContainer,
+  },
+  {
+    path: '/messages',
+    exact: true,
+    component: MessagesContainer,
   },
 ];

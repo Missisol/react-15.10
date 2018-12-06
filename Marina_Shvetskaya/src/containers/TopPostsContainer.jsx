@@ -7,15 +7,6 @@ import { loadTopPostsAction } from "actions/topPosts";
 
 // Контейнер с логикой рендеринга блока с последними постами
 class TopPostsContainer extends Component {
-  // constructor(props) {
-  //   super(props);
-  //
-  //   this.state = {
-  //     loading: true,
-  //     posts: [],
-  //     amount: 10,
-  //   }
-  // }
 
   /**
    * Загружает комментарий по его id
@@ -49,7 +40,7 @@ function mapStateToProps(state, props) {
 function mapDispatchToProps(dispatch, props) {
   return {
     ...props,
-    loadTopPosts: () => loadTopPostsAction(dispatch),
+    loadTopPosts: () => dispatch(loadTopPostsAction()),
   }
 }
 

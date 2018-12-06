@@ -4,6 +4,7 @@ import { loadStarted, loadCompleted, loadFailed } from "actions/topPosts";
 const initialState = {
   entities: [],
   loading: false,
+  quantity: 10,
 };
 
 export default handleActions({
@@ -18,6 +19,7 @@ export default handleActions({
       ...state,
       entities: state.entities.concat(action.payload),
       loading: false,
+      quantity: state.quantity,
     }
   },
   [loadFailed]: (state) => {

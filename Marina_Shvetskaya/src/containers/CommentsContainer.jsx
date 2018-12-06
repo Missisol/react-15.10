@@ -7,23 +7,16 @@ import { load } from 'actions/comments';
 // Контейнер с логикой рендеринга страницы "Комментарии"
 class CommentsContainer extends Component {
 
-
-  /**
-   * Загружает комментарии из хранилища
-   */
-  // loadComments = () => {
-    // const { page } = this.state;
-  // };
-
   /**
    * Обрабатывает прокрутку колеса мыши, вызывает загрузчик следующей страницы комментариев
    */
   handleScroll = () => {
-    // if(document.documentElement.clientHeight - window.scrollY - window.innerHeight <= 50 && window.scrollY !== 0) {
-    //   if(!this.state.loading) {
-        // this.loadComments();
-    //   }
-    // }
+    const { loadComments } = this.props;
+    if(document.documentElement.clientHeight - window.scrollY - window.innerHeight <= 50 && window.scrollY !== 0) {
+      if(!this.props.loading) {
+       loadComments();
+      }
+    }
   };
 
   componentDidMount() {
@@ -31,11 +24,11 @@ class CommentsContainer extends Component {
 
     loadComments();
 
-    // window.addEventListener('scroll', this.handleScroll);
+    window.addEventListener('scroll', this.handleScroll);
   }
 
   componentWillUnmount() {
-    // window.removeEventListener('scroll', this.handleScroll);
+    window.removeEventListener('scroll', this.handleScroll);
   }
 
   render() {
@@ -61,7 +54,7 @@ function mapStateToProps(state, props) {
 function mapDispatchToProps(dispatch, props) {
   return {
     ...props,
-    loadComments: () => load(dispatch),
+    loadComments: () => dispatch(load()),
   }
 }
 

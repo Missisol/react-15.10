@@ -9,14 +9,13 @@ export default class UserPostCommentsContainer extends Component {
   constructor(props) {
     super(props);
 
-    this.userId = this.props.match.params.userId;
-    this.postId = this.props.match.params.postId;
-
     this.state = {
       loading: true,
       user: {},
       userPosts: {},
       postComments: [],
+      userId: props.match.params.userId,
+      postId: props.match.params.postId,
     }
   }
 
@@ -24,11 +23,13 @@ export default class UserPostCommentsContainer extends Component {
    * Загружает данные для поста пользователя с комментариями
    */
   loadData() {
+    const { userId, postId } = this.state;
+
     this.setState({
       loading: true,
     });
 
-    fetch(`https://jsonplaceholder.typicode.com/users/${this.userId}`)
+    fetch(`https://jsonplaceholder.typicode.com/users/${userId}`)
       .then((response) => response.json())
       .then((user) => {
         this.setState({
@@ -40,7 +41,7 @@ export default class UserPostCommentsContainer extends Component {
         this.setState({loading: false});
       });
 
-    fetch(`https://jsonplaceholder.typicode.com/posts/${this.postId}`)
+    fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`)
       .then((response) => response.json())
       .then((userPosts) => {
         this.setState({
@@ -52,7 +53,7 @@ export default class UserPostCommentsContainer extends Component {
         this.setState({loading: false});
       });
 
-    fetch(`https://jsonplaceholder.typicode.com/comments?postId=${this.postId}`)
+    fetch(`https://jsonplaceholder.typicode.com/comments?postId=${postId}`)
       .then((response) => response.json())
       .then((postComments) => {
         this.setState({

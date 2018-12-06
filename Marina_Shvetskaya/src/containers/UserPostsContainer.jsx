@@ -7,12 +7,10 @@ export default class UserPostsContainer extends Component {
   constructor(props) {
     super(props);
 
-    this.user = this.props.user;
-    this.userId = this.user.id;
-
     this.state = {
       loading: true,
       userPosts: [],
+      userId: props.user.id,
     };
   }
 
@@ -20,11 +18,13 @@ export default class UserPostsContainer extends Component {
    * Загружает посты пользователя из хранилища
    */
   componentDidMount() {
+    const { userId } = this.state;
 
     this.setState({
       loading: true,
+      userId,
     });
-    fetch(`https://jsonplaceholder.typicode.com/posts?userId=${this.userId}`)
+    fetch(`https://jsonplaceholder.typicode.com/posts?userId=${userId}`)
       .then((response) => response.json())
       .then((userPosts) => {
         this.setState({

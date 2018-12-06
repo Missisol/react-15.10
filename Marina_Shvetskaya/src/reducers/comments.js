@@ -4,6 +4,7 @@ import { loadStarted, loadCompleted, loadFailed } from "actions/comments";
 const initialState = {
   entities: [],
   loading: false,
+  page: 1
 };
 
 export default handleActions({
@@ -18,6 +19,7 @@ export default handleActions({
       ...state,
       entities: state.entities.concat(action.payload),
       loading: false,
+      page: state.page + 1,
     }
   },
   [loadFailed]: (state) => {
