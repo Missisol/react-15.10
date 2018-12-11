@@ -53,7 +53,7 @@ app.get('/users', async (req, res) => {
 res.json(user);
 });
 
-app.post('user', urlencodedParser, (req, res) => {
+app.post('/user', urlencodedParser, (req, res) => {
   const user = new User(req.body);
   user.save();
 

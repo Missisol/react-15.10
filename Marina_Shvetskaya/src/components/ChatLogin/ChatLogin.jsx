@@ -26,7 +26,8 @@ export default class ChatLogin extends Component {
   };
 
   render() {
-    const {username, password} = this.props;
+    const {username, password} = this.state;
+
     return (
       <form action="user" method="POST">
         <div className="form-group">
