@@ -1,5 +1,5 @@
 import { handleActions } from 'redux-actions';
-import { messageReceived, messagesLoadComplete } from 'actions/messages';
+import { messageReceived, messagesLoadComplete, messagesLoadFailed } from 'actions/messages';
 
 const initialState = {
   entities: [],
@@ -18,4 +18,10 @@ export default handleActions({
       entities: state.entities.concat(action.payload),
     };
   },
+  [messagesLoadFailed]: (state) => {
+    return {
+      ...state,
+      entities: [],
+    }
+  }
 }, initialState);

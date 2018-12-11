@@ -5,6 +5,7 @@ import UsersContainer from 'containers/UsersContainer';
 import CommentContainer from 'containers/CommentContainer';
 import UserPostCommentsContainer from 'containers/UserPostCommentsContainer';
 import MessagesContainer from 'containers/MessagesContainer';
+import ChatLoginContainer from "containers/ChatLoginContainer";
 
 export default [
   {
@@ -41,5 +42,10 @@ export default [
     path: '/messages',
     exact: true,
     component: MessagesContainer,
+  },
+  {
+    path: '/user',
+    exact: true,
+    component: ChatLoginContainer,
   },
 ];

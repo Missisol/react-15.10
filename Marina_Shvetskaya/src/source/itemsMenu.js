@@ -4,4 +4,5 @@ export default [
     { href: '/users', title: 'Пользователи' },
     { href: '/comments', title: 'Комментарии' },
     { href: '/messages', title: 'Чат' },
+    { href: '/user', title: 'Войти в чат' },
 ]
