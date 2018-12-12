@@ -1,7 +1,6 @@
+
 import React, {Component, Fragment} from 'react';
 import PropTypes from 'prop-types';
-import ChatLogin from "components/ChatLogin";
-
 
 export default class ChatLoginContainer extends Component {
   constructor(props) {
@@ -10,49 +9,34 @@ export default class ChatLoginContainer extends Component {
     this.state = {
       username: '',
       password: '',
-      onChange: {
-        username: '',
-        password: '',
-      },
-      onSubmit: false,
     };
   }
 
-  static propTypes = {
-    onChange: PropTypes.objectOf(
-      PropTypes.shape({
-        username: PropTypes.string,
-        password: PropTypes.string,
-      })
-    )
-  };
-
-  handleChange = (e) => {
+  handleChange = (event) => {
     this.setState({
-      onChange: {
-        [event.target.name]: event.target.value,
-      }
+      [event.target.name]: event.target.value,
     });
   };
 
-  handleSend = (e) => {
-    this.setState({
-      onSubmit: true,
-    });
+  handleSubmit = (event) => {
     event.preventDefault();
   };
 
-
   render() {
     return (
-      <Fragment>
-        <ChatLogin username={this.state.onChange.username} password={this.state.onChange.password}
-                   onChange={() => this.handleChange}
-                   onSubmit={() => this.handleSend}
-        />
-      </Fragment>
+      <form onSubmit={this.handleSubmit} method="POST">
+        <div className="form-group">
+          <label htmlFor="nickname">Enter your nickname</label>
+          <input onChange={this.handleChange} className="form-control" id="nickname" type="text" name="username"
+                value={this.state.username} />
+        </div>
+        <div className="form-group">
+          <label htmlFor="pass">Enter your password</label>
+          <input onChange={this.handleChange} className="form-control" id="pass" type="password" name="password"
+                 value={this.state.password} />
+        </div>
+        <button  type="submit" className="btn btn-primary">Send</button>
+      </form>
     )
   }
 }
-
-
