@@ -16,9 +16,9 @@ const app = express();
 const server = http.Server(app);
 const io = SocketIO(server);
 
-var urlencodedParser = bodyParser.urlencoded({ extended: false });
-
 app.use(cors());
+
+const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 app.use(session({
   secret: "MyReact",
@@ -54,10 +54,10 @@ res.json(user);
 });
 
 app.post('/user', urlencodedParser, (req, res) => {
-  const user = new User(req.body);
-  user.save();
-
-  res.end();
+  if(!req.body) {
+    return res.sendStatus(400);
+  }
+  res.send('/');
 });
 
 server.listen(3000, () => {
