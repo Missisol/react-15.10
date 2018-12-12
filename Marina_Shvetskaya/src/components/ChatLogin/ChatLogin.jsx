@@ -4,23 +4,40 @@ import React, {Component, Fragment} from 'react';
 import PropTypes from 'prop-types';
 
 export default class ChatLogin extends Component {
-  render() {
-    const {handleChange, handleSend} = this.props;
-    console.log(this.props);
+  constructor(props) {
+    super(props);
 
+    this.state = {
+      username: '',
+      password: '',
+    };
+  }
+
+  handleChange = (event) => {
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  handleSubmit = (event) => {
+    console.log(this.state);
+    event.preventDefault();
+  };
+
+  render() {
     return (
-      <form action="user" method="POST">
+      <form onSubmit={this.handleSubmit} method="POST">
         <div className="form-group">
           <label htmlFor="nickname">Enter your nickname</label>
-          <input onChange={handleChange} className="form-control" id="nickname" type="text" name="username"
-                value={this.props.onChange.username} />
+          <input onChange={this.handleChange} className="form-control" id="nickname" type="text" name="username"
+                value={this.state.username} />
         </div>
         <div className="form-group">
           <label htmlFor="pass">Enter your password</label>
-          <input onChange={handleChange} className="form-control" id="pass" type="password" name="password"
-                 value={this.props.onChange.password} />
+          <input onChange={this.handleChange} className="form-control" id="pass" type="password" name="password"
+                 value={this.state.password} />
         </div>
-        <button onSubmit={handleSend} type="submit" className="btn btn-primary">Send</button>
+        <button  type="submit" className="btn btn-primary">Send</button>
       </form>
     )
   }
