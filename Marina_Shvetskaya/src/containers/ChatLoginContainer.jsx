@@ -1,4 +1,3 @@
-
 import React, {Component, Fragment} from 'react';
 import PropTypes from 'prop-types';
 
@@ -24,7 +23,7 @@ export default class ChatLoginContainer extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit} method="POST">
+      <form onSubmit={this.handleSubmit}>
         <div className="form-group">
           <label htmlFor="nickname">Enter your nickname</label>
           <input onChange={this.handleChange} className="form-control" id="nickname" type="text" name="username"
