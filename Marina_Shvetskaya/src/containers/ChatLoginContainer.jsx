@@ -18,12 +18,24 @@ export default class ChatLoginContainer extends Component {
   };
 
   handleSubmit = (event) => {
+    fetch('/user', {
+      method: 'POST',
+      body: 'FormData',
+      mode: 'cors',
+      credentials: 'include',
+    })
+      .then(res => {
+        return res.formData()
+      })
+      .catch(err => {
+
+      });
     event.preventDefault();
   };
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit} method="POST">
         <div className="form-group">
           <label htmlFor="nickname">Enter your nickname</label>
           <input onChange={this.handleChange} className="form-control" id="nickname" type="text" name="username"
