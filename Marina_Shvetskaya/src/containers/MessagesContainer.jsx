@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import MessagesList from 'components/MessagesList';
 import MessageForm from 'components/MessageForm';
 import { load, send, listen } from 'actions/messages';
+import ChatList from "components/ChatList";
 
 class MessagesContainer extends Component {
   componentDidMount() {
@@ -18,8 +19,13 @@ class MessagesContainer extends Component {
 
     return (
       <Fragment>
-        <MessagesList messages={messages} />
-        <MessageForm send={send} />
+        <div className="row">
+          <ChatList />
+          <div className="col">
+            <MessageForm send={send} />
+            <MessagesList messages={messages} />
+          </div>
+        </div>
       </Fragment>
     )
   }

@@ -1,53 +1,43 @@
 import React, {Component, Fragment} from 'react';
-import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-export default class ChatLoginContainer extends Component {
-  constructor(props) {
-    super(props);
+import ChatLogin from 'components/ChatLogin';
+import { send, listen, load } from 'actions/users';
 
-    this.state = {
-      username: '',
-      password: '',
-    };
+class ChatLoginContainer extends Component {
+  componentDidMount() {
+    const { listenUsers, loadUser } = this.props;
+
+    listenUsers();
+    loadUser();
   }
 
-  handleChange = (event) => {
-    this.setState({
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  handleSubmit = (event) => {
-    fetch('/user', {
-      method: 'POST',
-      body: 'FormData',
-      mode: 'cors',
-      credentials: 'include',
-    })
-      .then(res => {
-        return res.formData()
-      })
-      .catch(err => {
-
-      });
-    event.preventDefault();
-  };
-
   render() {
+    const { send, user } = this.props;
+
     return (
-      <form onSubmit={this.handleSubmit} method="POST">
-        <div className="form-group">
-          <label htmlFor="nickname">Enter your nickname</label>
-          <input onChange={this.handleChange} className="form-control" id="nickname" type="text" name="username"
-                value={this.state.username} />
-        </div>
-        <div className="form-group">
-          <label htmlFor="pass">Enter your password</label>
-          <input onChange={this.handleChange} className="form-control" id="pass" type="password" name="password"
-                 value={this.state.password} />
-        </div>
-        <button  type="submit" className="btn btn-primary">Send</button>
-      </form>
+      <Fragment>
+        <ChatLogin send={send} user={user}/>
+      </Fragment>
     )
   }
 }
+
+function mapStateToProps(state, props) {
+  return {
+    ...props,
+    users: state.users.entities,
+  }
+}
+
+function mapDispatchToProps(dispatch, props) {
+  return {
+    ...props,
+    listenUsers: () => dispatch(listen()),
+    loadUser: () => dispatch(load()),
+    send: (user) => send(user),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChatLoginContainer);
+

@@ -30,11 +30,15 @@ export default class MessageForm extends Component {
   render() {
     const { author, text } = this.state;
     return (
-      <div className="form-group">
-        <input onChange={this.handleChange} type="text" name="author" value={author} /><br/>
-        <textarea onChange={this.handleChange} name="text" value={text}></textarea><br/>
-        <button onClick={this.handleSend}>Send</button>
-      </div>
+      <Fragment>
+        <div className="form-group">
+          <input onChange={this.handleChange} className="form-control" type="text" name="author" value={author} placeholder="Enter your nickname" />
+        </div>
+        <div className="form-group">
+          <textarea onChange={this.handleChange} className="form-control" name="text" value={text} />
+        </div>
+        <button onClick={this.handleSend} className="btn btn-primary mb-4">Send</button>
+      </Fragment>
     )
   }
 }

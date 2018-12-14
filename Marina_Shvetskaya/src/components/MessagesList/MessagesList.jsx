@@ -12,10 +12,11 @@ export default class MessagesList extends Component {
 
   render() {
     const { messages } = this.props;
+    const reversed = messages.reverse();
     return (
       <div className="MessagesList">
         <ul>
-          {messages.map((message) => <li key={message._id}>{message.author}({message.timestamp}): {message.text}</li>)}
+          {reversed.map((message) => <li key={message._id}>{message.author}: {message.text} / ({message.timestamp})</li>)}
         </ul>
       </div>
     )

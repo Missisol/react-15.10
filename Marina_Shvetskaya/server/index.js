@@ -11,6 +11,7 @@ mongoose.connect('mongodb://localhost/test', {useNewUrlParser: true});
 
 const Message = require('./models/message');
 const User = require('./models/user');
+const Chat = require('./models/chat');
 
 const app = express();
 const server = http.Server(app);
@@ -18,7 +19,7 @@ const io = SocketIO(server);
 
 app.use(cors());
 
-const urlencodedParser = bodyParser.urlencoded({ extended: false });
+const urlencodedParser = bodyParser.urlencoded({extended: false});
 
 app.use(session({
   secret: "MyReact",
@@ -28,6 +29,7 @@ app.use(session({
   store: new MongoStore({mongooseConnection: mongoose.connection}),
 }));
 
+
 io.on('connection', (socket) => {
   socket.on('message', async (msg) => {
     let message = new Message(msg);
@@ -35,6 +37,30 @@ io.on('connection', (socket) => {
 
     socket.broadcast.emit('message', message);
     socket.emit('message', message);
+  });
+
+  socket.on('user', async (login) => {
+    let user = new User(login);
+
+    const username = user.username;
+    const password = user.password;
+    const regUser = await User.findOne({username: username, password: password});
+    if (regUser === null) {
+      user = await user.save()
+    } else {
+      console.log('regUser already exists');
+      socket.emit('user', user)
+    }
+
+    const socketId = socket.id;
+    let chat = new Chat({ username: username, socketId: socketId });
+    const activeUser = await Chat.findOne({ username: username });
+    if (activeUser === null) {
+      chat = await chat.save();
+    } else {
+      console.log('activeUser already exists');
+    }
+
   });
 });
 
@@ -50,14 +76,18 @@ app.get('/messages/:id', async (req, res) => {
 
 app.get('/users', async (req, res) => {
   const user = await User.find();
-res.json(user);
+  res.json(user);
 });
 
-app.post('/user', urlencodedParser, (req, res) => {
-  if(!req.body) {
-    return res.sendStatus(400);
-  }
-  res.send('/');
+app.get('/chats', async (req, res) => {
+  console.log(req.param.socketId);
+  const chat = await Chat.find();
+  res.json(chat);
+});
+
+app.get('/chats/:socketId', async (req, res) => {
+  const chat = await Chat.findOne({ socketId: req.param.socketId});
+  res.json(chat);
 });
 
 server.listen(3000, () => {
