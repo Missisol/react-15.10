@@ -6,8 +6,6 @@ import CommentContainer from 'containers/CommentContainer';
 import UserPostCommentsContainer from 'containers/UserPostCommentsContainer';
 import MessagesContainer from 'containers/MessagesContainer';
 import ChatLoginContainer from "containers/ChatLoginContainer";
-import OneUserChatContainer from "containers/OneUserChatContainer";
-import ChatList from "components/ChatList";
 
 export default [
   {
@@ -50,9 +48,4 @@ export default [
     exact: true,
     component: ChatLoginContainer,
   },
-  // {
-  //   path: '/messages/:userChatId',
-  //   exact: true,
-  //   component: OneUserChatContainer,
-  // },
 ];
